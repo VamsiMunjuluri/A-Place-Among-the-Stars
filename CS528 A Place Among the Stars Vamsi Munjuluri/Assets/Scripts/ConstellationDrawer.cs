@@ -40,6 +40,9 @@ public class ConstellationDrawer : MonoBehaviour
                     if (starPositionsByHIP.TryGetValue(hipId1, out Vector3 position1) && 
                         starPositionsByHIP.TryGetValue(hipId2, out Vector3 position2))
                     {
+                        position1.y += 1;
+                        position2.y += 1;
+
                         GameObject line = DrawLineBetweenStars(position1, position2);
                         // Store the original positions
                         originalLinePositions[line] = (position1, position2);
