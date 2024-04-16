@@ -12,6 +12,7 @@ public class CosmosJourney : MonoBehaviour
     ParticleSystem.Particle[] particleStars;
     public TextAsset starCSV;
     public int maxParticles = 100;
+
     
     public Dictionary<int, Vector3> starPositionsByHIP = new Dictionary<int, Vector3>();
     private int counter = 1;
@@ -103,13 +104,13 @@ public class CosmosJourney : MonoBehaviour
     {
         switch (spectralType.Trim())
         {
-            case "O": return new Color(0.5f, 0.5f, 1.0f);
-            case "B": return new Color(0.7f, 0.7f, 1.0f); // Blue-white
-            case "A": return new Color(1.0f, 1.0f, 1.0f);
-            case "F": return new Color(1.0f, 1.0f, 0.5f); // Yellow-white
-            case "G": return new Color(1.0f, 1.0f, 0.2f);
-            case "K": return new Color(1.0f, 0.8f, 0.4f); // Orange
-            case "M": return new Color(1.0f, 0.5f, 0.0f);
+            case "O": return new Color(0.0f, 0.0f, 1.0f, 1.0f);
+            case "B": return new Color(0.5f, 0.5f, 1.0f, 1.0f); // Blue-white
+            case "A": return new Color(0.9f, 0.9f, 1.0f, 1.0f);
+            case "F": return new Color(1.0f, 1.0f, 0.5f, 1.0f); // Yellow-white
+            case "G": return new Color(1.0f, 1.0f, 0.0f, 1.0f);
+            case "K": return new Color(1.0f, 0.6f, 0.0f, 1.0f); // Orange
+            case "M": return new Color(1.0f, 0.2f, 0.0f, 1.0f);
             default: return Color.white; // Default color if spectral type is unknown
         }
     }
@@ -193,7 +194,7 @@ public class CosmosJourney : MonoBehaviour
                 // particleStars[i].startSize = 1.0f; // Make sure the size is large enough to be visible.
                 particleStars[i].startLifetime = Mathf.Infinity;
                 particleStars[i].startColor = starColor; // Use a color that will be visible.
-                particleStars[i].startSize = 0.4F * starSize;
+                particleStars[i].startSize = 0.4f * starSize;
             }
             else
             {
