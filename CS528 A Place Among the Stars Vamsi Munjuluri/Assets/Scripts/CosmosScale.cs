@@ -16,7 +16,7 @@ public class CosmosScale : MonoBehaviour
         navController = GetComponentInParent<CAVE2WandNavigator>();
 
         float sliderVal = slider.value; // Assuming this is the initial scale value
-        label.text = "CosmosScale: " + sliderVal + "Par/Feet";
+        label.text = "CosmosScale: " + sliderVal + "Feet/Parsec";
 
         UpdateScale(); // Initialize scale on start
     }
@@ -38,7 +38,7 @@ public class CosmosScale : MonoBehaviour
             }
         }
 
-        label.text = "CosmosScale: " + sliderVal + "Par/Feet";
+        label.text = "CosmosScale: " + sliderVal + "Feet/Par";
     }
 
     // Call this method to add a new ConstellationDrawer to be managed

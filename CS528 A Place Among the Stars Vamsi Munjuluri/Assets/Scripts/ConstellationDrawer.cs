@@ -40,8 +40,8 @@ public class ConstellationDrawer : MonoBehaviour
                     if (starPositionsByHIP.TryGetValue(hipId1, out Vector3 position1) && 
                         starPositionsByHIP.TryGetValue(hipId2, out Vector3 position2))
                     {
-                        position1.y += 1;
-                        position2.y += 1;
+                       // position1.y += 1;
+                       // position2.y += 1;
 
                         GameObject line = DrawLineBetweenStars(position1, position2);
                         // Store the original positions
@@ -54,6 +54,9 @@ public class ConstellationDrawer : MonoBehaviour
 
     private GameObject DrawLineBetweenStars(Vector3 position1, Vector3 position2)
     {
+        position1.y += 1;
+        position2.y += 1;
+
         GameObject line = new GameObject("ConstellationLine");
         LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
 
@@ -88,6 +91,9 @@ public class ConstellationDrawer : MonoBehaviour
             // Apply scaling to the original positions
             Vector3 startPosition = lineEntry.Value.Item1 * scaleFactor;
             Vector3 endPosition = lineEntry.Value.Item2 * scaleFactor;
+
+            startPosition.y += 1;
+            endPosition.y += 1;
 
             lineRenderer.SetPosition(0, startPosition);
             lineRenderer.SetPosition(1, endPosition);
