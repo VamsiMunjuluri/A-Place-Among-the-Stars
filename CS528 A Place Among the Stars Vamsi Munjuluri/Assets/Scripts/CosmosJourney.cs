@@ -13,7 +13,12 @@ public class CosmosJourney : MonoBehaviour
     public TextAsset starCSV;
     public int maxParticles = 100;
 
-    
+    private Vector3 lastCameraPosition;
+    public Transform cameraTransform;
+    public float updateThreshold = 10f;
+    private List<int> displayStarIndices = new List<int>();
+
+
     public Dictionary<int, Vector3> starPositionsByHIP = new Dictionary<int, Vector3>();
     private int counter = 1;
     private Vector3[] originalPositions;
@@ -26,6 +31,16 @@ public class CosmosJourney : MonoBehaviour
 
 
     }
+
+    void Update()
+    {
+        if (cameraTransform != null && Vector3.Distance(lastCameraPosition, cameraTransform.position) > updateThreshold)
+        {
+            SortStarsByDistance(cameraTransform.position);
+            lastCameraPosition = cameraTransform.position;
+        }
+    }
+
 
     void OnEnable()
     {
@@ -138,6 +153,8 @@ public class CosmosJourney : MonoBehaviour
     void Start()
     {
         InitializeParticles();
+        lastCameraPosition = cameraTransform.position;
+        SortStarsByDistance(lastCameraPosition);
     }
 
     void InitializeParticles()
@@ -228,6 +245,44 @@ public class CosmosJourney : MonoBehaviour
         }
     }
 
-   
+    private void SortStarsByDistance(Vector3 referencePoint)
+    {
+        List<KeyValuePair<int, float>> starDistances = new List<KeyValuePair<int, float>>();
+
+        // Calculate the distance of each star from the reference point and store it
+        for (int i = 0; i < particleStars.Length; i++)
+        {
+            float distance = Vector3.Distance(referencePoint, particleStars[i].position);
+            starDistances.Add(new KeyValuePair<int, float>(i, distance));
+        }
+
+        // Sort by the distance
+        starDistances.Sort((a, b) => a.Value.CompareTo(b.Value));
+
+        // Clear the previous indices
+        displayStarIndices.Clear();
+
+        // Take the nearest 30,000 stars
+        for (int i = 0; i < 10000 && i < starDistances.Count; i++)
+        {
+            displayStarIndices.Add(starDistances[i].Key);
+        }
+
+        // Now update the particle system to display only those stars
+        UpdateParticleSystem();
+    }
+
+    private void UpdateParticleSystem()
+    {
+        ParticleSystem.Particle[] particlesToDisplay = new ParticleSystem.Particle[displayStarIndices.Count];
+
+        for (int i = 0; i < displayStarIndices.Count; i++)
+        {
+            particlesToDisplay[i] = particleStars[displayStarIndices[i]];
+        }
+
+        ps.Clear(); // Clear the existing particles
+        ps.SetParticles(particlesToDisplay, particlesToDisplay.Length); // Set the new subset
+    }
 
 }

@@ -11,6 +11,7 @@ public class CosmosScale : MonoBehaviour
     public List<ConstellationDrawer> constellationDrawers; // List to hold multiple constellation drawers
     public CAVE2WandNavigator navController;
 
+
     void Start()
     {
         navController = GetComponentInParent<CAVE2WandNavigator>();

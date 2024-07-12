@@ -5,14 +5,15 @@ public class DistanceDisplay : MonoBehaviour
 {
     public Transform target; // Assign your player or camera here
     public TMP_Text distanceText; // Assign your TextMeshPro text component here
-
+    public CosmosScale cosmosScale;
     void Update()
     {
+        float scaleFactor = cosmosScale.slider.value;
         // Calculate the distance from the origin (0, 0, 0) to the target's position
         float distance = Vector3.Distance(target.position, Vector3.zero);
 
         // Convert distance to Parsecs from meters, assuming the initial distance is in meters.
-        double distanceInParsecs = (distance - 1.6) * 3.28084;
+        double distanceInParsecs = ((distance - 1.6) * 3.28084 ) / scaleFactor;
 
         // Update the text based on distance ranges
         if (distanceInParsecs < 10)
